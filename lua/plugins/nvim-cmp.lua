@@ -41,7 +41,7 @@ local kind_icons = {
 }
 return {
   "hrsh7th/nvim-cmp",
-  dependecy = {
+  dependencies = {
     "neovim/nvim-lspconfig",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
