@@ -1,9 +1,11 @@
 {
   "extras": [
-
+    "lazyvim.plugins.extras.coding.codeium",
+    "lazyvim.plugins.extras.coding.copilot",
+    "lazyvim.plugins.extras.coding.yanky"
   ],
   "news": {
     "NEWS.md": "2191"
   },
-  "version": 2
+  "version": 3
 }
