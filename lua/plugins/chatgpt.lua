@@ -1,5 +1,6 @@
 return {
   "jackMort/ChatGPT.nvim",
+  enabled = true,
   event = "VeryLazy",
   config = function()
     require("chatgpt").setup({
@@ -17,7 +18,7 @@ return {
       chat = {
         welcome_message = WELCOME_MESSAGE,
         loading_text = "Loading, please wait ...",
-        question_sign = "", -- 🙂
+        question_sign = "", -- 🙂
         answer_sign = "🤖", -- ﮧ
         border_left_sign = "",
         border_right_sign = "",
@@ -38,11 +39,11 @@ return {
         },
       },
       openai_params = {
-        model = "gpt-3.5-turbo",
+        model = "gpt-3.5-turbo-1106",
         -- model = "gpt-4-1106-preview",
         frequency_penalty = 0,
         presence_penalty = 0,
-        max_tokens = 3000,
+        max_tokens = 5000,
         temperature = 0,
         top_p = 1,
         n = 1,

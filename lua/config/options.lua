@@ -4,6 +4,7 @@
 
 vim.opt.relativenumber = false
 vim.opt.autowrite = true
+vim.opt.scrolloff = 8
 -- local _border = "single"
 --
 -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

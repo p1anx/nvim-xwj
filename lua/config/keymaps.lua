@@ -23,3 +23,9 @@ end, { remap = true })
 vim.keymap.set("", "T", function()
   hop.hint_char2({ diretion = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 end, { remap = true })
+-- ********************************************************
+-- ==>                   chatgpt.nvim
+-- ********************************************************
+vim.keymap.set("n", "<leader>ch", "<cmd>ChatGPT<cr>")
+vim.keymap.set("n", "<leader>ci", "<cmd>ChatGPTEditWithInstructions<cr>")
+-- vim.keymap.set("n", "<leader>ch", "<cmd>ChatGPT<cr>")
