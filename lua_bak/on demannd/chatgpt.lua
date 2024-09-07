@@ -4,10 +4,9 @@ return {
   event = "VeryLazy",
   config = function()
     require("chatgpt").setup({
-      -- api_host_cmd = "https://api.chatanywhere.tech",
-      -- api_key_cmd = "sk-K54UmZ1y9zZ87HZMpPAj0GxihcAUlQ2d5d9nfJj5KymBg0eM",
+      api_host_cmd = "https://api.chatanywhere.tech",
+      api_key_cmd = "sk-K54UmZ1y9zZ87HZMpPAj0GxihcAUlQ2d5d9nfJj5KymBg0eM",
       -- extra_curl_params = {
-      --   "-H",
       --   "https://api.chatanywhere.tech",
       -- },
       -- api_key_cmd = "op read op:sk-K54UmZ1y9zZ87HZMpPAj0GxihcAUlQ2d5d9nfJj5KymBg0eM --no-newline",
