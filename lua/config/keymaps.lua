@@ -3,3 +3,10 @@
 -- Add any additional keymaps here
 
 vim.keymap.set({ "v", "n" }, "y", '"+y')
+
+-- ========================================
+--   flash
+-- ========================================
+vim.keymap.set({ "n", "x", "o" }, "f", function()
+  require("flash").jump()
+end)
