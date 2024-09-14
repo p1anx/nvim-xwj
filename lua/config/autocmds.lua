@@ -9,7 +9,9 @@ vim.api.nvim_create_autocmd("FileType", {
       0,
       "n",
       "<F5>",
-      ":w!<cr>:sp<cr>:te gcc % -o %:t:r && %:t:r<CR>i",
+      ":w!<cr>:sp<cr>:te gcc '%' -o '%:t:r' && './%:t:r'<CR>i",
+      -- ":w!<cr>:sp<cr>:te gcc '%' -o '%:t:r' && './%:t:r'<CR>i",
+      -- ":w!<cr>:sp<cr>:te gcc % -o %:t:r && %:t:r<CR>i",
       -- ":w!<cr>:sp<cr>:te gcc % -o %:t:r && %:t:r.exe<CR>i",
       { silent = true, noremap = true }
     )
@@ -31,7 +33,8 @@ vim.api.nvim_create_autocmd("FileType", {
       0,
       "n",
       "<F5>",
-      ":w!<cr>:sp<cr>:te g++ % -o %:t:r && %:t:r<CR>i",
+      -- ":w!<cr>:sp<cr>:te g++ % -o %:t:r && %:t:r<CR>i",
+      ":w!<cr>:sp<cr>:te g++ '%' -o '%:t:r' && './%:t:r'<CR>i",
       -- ":w!<cr>:sp<cr>:te g++ % -o %:t:r && %:t:r.exe<CR>i",
       { silent = true, noremap = true }
     )
