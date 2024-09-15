@@ -8,3 +8,5 @@ vim.opt.splitright = true -- open new horizontal splits right
 
 vim.opt.autowrite = true
 vim.opt.autochdir = true
+-- vim.opt.textwidth = 10
+vim.opt.wrap = true
