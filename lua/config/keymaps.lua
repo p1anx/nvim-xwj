@@ -29,5 +29,6 @@ vim.keymap.set({ "n", "x", "o" }, "f", function()
 end)
 
 -- set script for matlab start comsol
-vim.keymap.set("n", "<leader>mm", ":te ~/.config/nvim/lua/script/comsol_startup.sh<cr>i")
+--   ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r 'run('%')'<CR>i",
+vim.keymap.set("n", "<leader>mm", ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r '%:t:r;'<CR>i")
 -- vim.keymap.set("n", "<leader>mm", ":te ~/hello.sh<cr>i")

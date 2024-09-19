@@ -38,4 +38,4 @@ fi
 comsol server &
 # matlab -nodesktop -nosplash -r 'mphstart("127.0.0.1", 2036, "root", "xwjs"); $FILE'
 # matlab -nodesktop -nosplash -r 'test; disp("this is ok"); exit;'
-matlab -nodesktop -nosplash -r "mphstart('127.0.0.1', 2036, 'root', 'xwjs'); run('$FILE'); exit;
+matlab -nodesktop -nosplash -r "mphstart('127.0.0.1', 2036, 'root', 'xwjs'); run('$FILE'); exit;"
