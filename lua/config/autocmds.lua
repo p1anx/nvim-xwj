@@ -58,5 +58,13 @@ vim.api.nvim_create_autocmd("FileType", {
       ":w!<cr>:sp<cr>:te ~/.config/nvim/lua/script/comsol_startup.sh '%:t:r'<CR>i",
       { silent = true, noremap = true }
     )
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<F5>",
+      ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r 'run('%')'<CR>i",
+      -- ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r '%:t:r'<CR>i", --or use this
+      { silent = true, noremap = true }
+    )
   end,
 })
