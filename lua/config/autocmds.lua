@@ -47,3 +47,16 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(0, "n", "<F5>", ":w!<cr>:sp<cr>:te python %<CR>i", { silent = true, noremap = true })
   end,
 })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "matlab",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<leader>mc",
+      ":w!<cr>:sp<cr>:te ~/.config/nvim/lua/script/comsol_startup.sh '%:t:r'<CR>i",
+      { silent = true, noremap = true }
+    )
+  end,
+})

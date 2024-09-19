@@ -27,3 +27,7 @@ end
 vim.keymap.set({ "n", "x", "o" }, "f", function()
   require("flash").jump()
 end)
+
+-- set script for matlab start comsol
+vim.keymap.set("n", "<leader>mm", ":te ~/.config/nvim/lua/script/comsol_startup.sh<cr>i")
+-- vim.keymap.set("n", "<leader>mm", ":te ~/hello.sh<cr>i")
