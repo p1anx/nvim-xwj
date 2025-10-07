@@ -5,12 +5,75 @@
             "expands? jumps? $1 $2 !"
         ]
     },
-    "snip2": {
-        "prefix": "all2",
+    "clangd_stm32": {
+        "prefix": ".clangd_stm32",
         "body": [
-            "multi $1",
-            "line $2",
-            "snippet$0"
-        ]
+            "CompileFlags:",
+            "  # 指定 compile_commands.json 位置",
+            "  CompilationDatabase: build/default",
+            "  ",
+            "  # 手动添加包含路径",
+            "  Add:",
+            "    # ARM GCC 工具链头文件",
+            "    - -I/usr/lib/gcc/arm-none-eabi/13.2.1/include",
+            "    - -I/usr/lib/gcc/arm-none-eabi/13.2.1/include-fixed",
+            "    # - -I/usr/arm-none-eabi/include",
+            "    - -I/usr/include/newlib",
+            ""
+        ],
+        "description": ".clangd for stm32 cmake"
     },
+    "clang-format0": {
+        "prefix": ".clang-format0",
+        "body": [
+            "# 基于哪个预设样式 LLVM Google Microsoft",
+            "BasedOnStyle: Microsoft",
+            "",
+            "# 缩进宽度",
+            "IndentWidth: 4",
+            "#",
+            "# # 使用空格还是制表符",
+            "# UseTab: Never",
+            "#",
+            "# 列宽限制",
+            "ColumnLimit: 200",
+            "#",
+            "# # 大括号换行风格",
+            "# BreakBeforeBraces: Attach",
+            "#",
+            "# # 函数参数对齐方式",
+            "# #AlignParameters: true",
+            "#",
+            "# # 指针和引用的对齐方式",
+            "# PointerAlignment: Left",
+            "#",
+            "# # 访问修饰符的缩进",
+            "# AccessModifierOffset: -2",
+            "#",
+            "# # 是否允许短的if语句放在一行",
+            "# AllowShortIfStatementsOnASingleLine: false",
+            "#",
+            "# # 是否允许短的函数放在一行",
+            "# AllowShortFunctionsOnASingleLine: Empty",
+            "#",
+            "# # 二元操作符前是否换行",
+            "# BreakBeforeBinaryOperators: false",
+            "#",
+            "# # 构造函数初始化列表的风格",
+            "# ConstructorInitializerAllOnOneLineOrOnePerLine: true",
+            "#",
+            "# # 排序包含头文件",
+            "SortIncludes: false"
+        ],
+        "description": ".clang-format"
+    },
+    "openocd_cfg": {
+        "prefix": "openocd_cfg",
+        "body": [
+            "source [find interface/cmsis-dap.cfg] ",
+            "source [find target/stm32f1x.cfg]     ",
+            ""
+        ],
+        "description": "openocd_cfg"
+    }
 }

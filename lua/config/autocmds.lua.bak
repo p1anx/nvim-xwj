@@ -1,0 +1,135 @@
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+-- Add any additional autocmds here
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<F5>",
+      ":w!<cr>:sp<cr>:te gcc '%' -o '%:t:r' && './%:t:r'<CR>i",
+      -- ":w!<cr>:sp<cr>:te gcc '%' -o '%:t:r' && './%:t:r'<CR>i",
+      -- ":w!<cr>:sp<cr>:te gcc % -o %:t:r && %:t:r<CR>i",
+      -- ":w!<cr>:sp<cr>:te gcc % -o %:t:r && %:t:r.exe<CR>i",
+      { silent = true, noremap = true }
+    )
+    -- clang 调试模式
+    -- vim.api.nvim_buf_set_keymap(
+    --   0,
+    --   "n",
+    --   "<F8>",
+    --   "<ESC>:w<CR>:split<CR>:te clang -std=c11 -Wshadow -Wall -o %:t:r% -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG && time ./%:t:r<CR>i",
+    --   -- "<ESC>:w<CR>:split<CR>:te clang -std=c11 -Wshadow -Wall -o %:t:r.exe % -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG && time ./%:t:r.exe<CR>i",
+    --   { silent = true, noremap = true }
+    -- )
+
+    -- F8: GCC 调试模式（等同于 Clang 的调试选项）
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<F8>",
+      ":w<CR>:split | term gcc -std=c11 -Wshadow -Wall -Wextra -g "
+        .. "-fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG "
+        .. "'%' -o '%:t:r' && time './%:t:r'<CR>i",
+      -- "<ESC>:w<CR>:split<CR>:te clang -std=c11 -Wshadow -Wall -o %:t:r% -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG && time ./%:t:r<CR>i",
+      -- "<ESC>:w<CR>:split<CR>:te clang -std=c11 -Wshadow -Wall -o %:t:r.exe % -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG && time ./%:t:r.exe<CR>i",
+      { silent = true, noremap = true }
+    )
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "cpp",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<F5>",
+      -- ":w!<cr>:sp<cr>:te g++ % -o %:t:r && %:t:r<CR>i",
+      ":w!<cr>:sp<cr>:te g++ '%' -o '%:t:r' && './%:t:r'<CR>i",
+      -- ":w!<cr>:sp<cr>:te g++ % -o %:t:r && %:t:r.exe<CR>i",
+      { silent = true, noremap = true }
+    )
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<leader>r",
+      ":w!<cr>:sp<cr>:te python %<CR>i",
+      { silent = true, noremap = true }
+    )
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "matlab",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
+      "<leader>mc",
+      ":w!<cr>:sp<cr>:te ~/.config/nvim/lua/script/comsol_startup.sh '%:t:r'<CR>i",
+      { silent = true, noremap = true }
+    )
+    -- vim.api.nvim_buf_set_keymap(
+    --   0,
+    --   "n",
+    --   "<F5>",
+    --   -- ":w!<cr>:sp<cr>:te ~/.config/nvim/lua/script/matlab_startup.sh '%:t:r'<CR>i",
+    --   ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r 'run('%')'<CR>i",
+    --   --   ":w!<cr>:sp<cr>:te matlab -nodesktop -nosplash -r '%:t:r'<CR>i", --or use this
+    --   { silent = true, noremap = true }
+    -- )
+  end,
+})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "sh",
+  callback = function()
+    -- -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+    vim.api.nvim_buf_set_keymap(0, "n", "<F5>", ":w!<cr>:sp<cr>:te bash %<CR>i", { silent = true, noremap = true })
+  end,
+  vim.keymap.set("n", "<F6>", function()
+    vim.cmd("w")
+    local filename = vim.fn.expand("%")
+    local args = vim.fn.input("Enter args: ")
+    vim.cmd("terminal ./" .. filename .. " " .. args)
+  end, { buffer = true }),
+})
+
+-- 添加到之前的 C 配置中
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "c",
+  callback = function()
+    local opts = { silent = true, noremap = true, buffer = 0 }
+
+    -- F5: 编译 STM32 项目
+    vim.keymap.set("n", "<F5>", ":w<CR>:split | term cmake --preset=default && ninja -C build/default<CR>i", opts)
+
+    -- F6: 烧录到 STM32
+    -- vim.keymap.set("n", "<F6>", ":split | term st-flash write build/*.bin 0x8000000<CR>", opts)
+    vim.keymap.set("n", "<F6>", ":split | term ninja -C build/default flash<CR>", opts)
+
+    -- F7: 启动 OpenOCD（需要手动启动一次）
+    vim.keymap.set("n", "<F7>", ":split | term openocd -f openocd.cfg<CR>", opts)
+
+    -- F8: 连接并开始调试
+    vim.keymap.set("n", "<F9>", function()
+      require("dap").continue()
+    end, opts)
+
+    -- F9: 清理并重新编译
+    vim.keymap.set(
+      "n",
+      "<F9>",
+      ":split | term cd build && rm -rf * && cmake -DCMAKE_BUILD_TYPE=Debug .. && make -j4<CR>",
+      opts
+    )
+  end,
+})

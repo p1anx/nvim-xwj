@@ -1,4 +1,5 @@
 local bufferline = require("bufferline")
+vim.opt.termguicolors = true
 return {
   "akinsho/bufferline.nvim",
   event = "VeryLazy",
@@ -8,11 +9,11 @@ return {
       style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
       show_tab_indicators = true, -- true | false,
       indicator = {
-        -- icon = '▎', -- this should be omitted if indicator style is not 'icon'
+        -- icon = "▎", -- this should be omitted if indicator style is not 'icon'
         -- icon = "_", -- this should be omitted if indicator style is not 'icon'
-        style = "none", --'icon' | 'underline' | 'none',
+        style = "underline", --'icon' | 'underline' | 'none',
       },
-      separator_style = "slant", --"slant"| "slope" | "thick" | "thin" | { 'any', 'any' },
+      separator_style = "thin", --"slant"| "slope" | "thick" | "thin" | { 'any', 'any' },
       -- close_command = function(n) Snacks.bufdelete(n) end,
       -- -- stylua: ignore
       -- right_mouse_command = function(n) Snacks.bufdelete(n) end,
@@ -21,7 +22,7 @@ return {
       diagnostics_indicator = function(_, _, diag)
         local icons = LazyVim.config.icons.diagnostics
         local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-          .. (diag.warning and icons.Warn .. diag.warning or "")
+        -- .. (diag.warning and icons.Warn .. diag.warning or "")
         return vim.trim(ret)
       end,
       offsets = {
@@ -30,9 +31,10 @@ return {
           text = "Neo-tree",
           highlight = "Directory",
           text_align = "left",
+          separator = true,
         },
       },
-      ---@param opts bufferline.IconFetcherOpts
+      color_icons = true,
       get_element_icon = function(opts)
         return LazyVim.config.icons.ft[opts.filetype]
       end,

@@ -1,5 +1,16 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
+-- require("bufferline").setup({
+--   highlights = {
+--
+--     fill = {
+--       bg = {
+--         attribute = "fg",
+--         highlight = "Pmenu",
+--       },
+--     },
+--   },
+-- })
 -- require("telescope").setup({
 --   extensions = {
 --     aerial = {

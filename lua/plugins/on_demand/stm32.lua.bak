@@ -1,0 +1,108 @@
+local dap = require("dap")
+local dapui = require("dapui")
+
+-- ===== DAP UI 设置 =====
+dapui.setup({
+  icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
+  layouts = {
+    {
+      elements = {
+        { id = "scopes", size = 0.25 },
+        { id = "breakpoints", size = 0.25 },
+        { id = "stacks", size = 0.25 },
+        { id = "watches", size = 0.25 },
+      },
+      size = 40,
+      position = "left",
+    },
+    {
+      elements = {
+        { id = "repl", size = 0.5 },
+        { id = "console", size = 0.5 },
+      },
+      size = 10,
+      position = "bottom",
+    },
+  },
+})
+
+-- 自动打开/关闭 UI
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+-- ===== 配置 GDB for ARM =====
+dap.adapters.gdb = {
+  type = "executable",
+  command = "gdb-multiarch",
+  args = { "-i", "dap" },
+}
+
+-- ===== STM32 配置（使用 OpenOCD） =====
+dap.configurations.c = {
+  {
+    name = "STM32 Debug (OpenOCD)",
+    type = "gdb",
+    request = "launch",
+    program = function()
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build/", "file")
+    end,
+    cwd = "${workspaceFolder}",
+    stopAtBeginningOfMainSubprogram = false,
+    setupCommands = {
+      {
+        text = "-enable-pretty-printing",
+        description = "enable pretty printing",
+        ignoreFailures = false,
+      },
+    },
+    -- 连接到 OpenOCD
+    miDebuggerServerAddress = "localhost:3333",
+    miDebuggerPath = "gdb-multiarch",
+  },
+  {
+    name = "STM32 Attach (OpenOCD)",
+    type = "gdb",
+    request = "attach",
+    program = function()
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build/", "file")
+    end,
+    cwd = "${workspaceFolder}",
+    miDebuggerServerAddress = "localhost:3333",
+    miDebuggerPath = "gdb-multiarch",
+  },
+}
+
+-- ===== 快捷键设置 =====
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- 基本调试控制
+keymap("n", "<leader>st", dap.continue, opts) -- 开始/继续
+keymap("n", "<F10>", dap.step_over, opts) -- 单步跳过
+keymap("n", "<F11>", dap.step_into, opts) -- 单步进入
+keymap("n", "<F12>", dap.step_out, opts) -- 单步退出
+keymap("n", "<Leader>b", dap.toggle_breakpoint, opts) -- 切换断点
+keymap("n", "<Leader>B", function()
+  dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, opts)
+
+-- UI 控制
+keymap("n", "<Leader>du", dapui.toggle, opts) -- 切换 UI
+keymap("n", "<Leader>dr", dap.repl.open, opts) -- 打开 REPL
+
+-- 终止调试
+keymap("n", "<Leader>dt", dap.terminate, opts)
+
+-- 查看变量
+keymap("n", "<Leader>dh", function()
+  require("dap.ui.widgets").hover()
+end, opts)
+
+print("STM32 DAP configuration loaded")
